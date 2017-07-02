@@ -48,6 +48,7 @@ set(APP_SOURCE_FILES
 set(RESOURCES
   ./Main.storyboard
   ./LaunchScreen.storyboard
+  ./Assets.xcassets
 )
 
 add_executable(

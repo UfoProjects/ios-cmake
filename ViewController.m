@@ -11,7 +11,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    i = [[CppInterface alloc]init];
+    i = [[CppInterface alloc] init];
 }
 
 - (void)didReceiveMemoryWarning {

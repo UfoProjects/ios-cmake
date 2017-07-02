@@ -1,8 +1,14 @@
 cmake_minimum_required (VERSION 3.7)
 
-set(LIBRARY_SOURCE
+set(LIBRARY_HEADERS
     ${CMAKE_CURRENT_LIST_DIR}/Foo.hh
+    ${CMAKE_CURRENT_LIST_DIR}/Foo2.hh)
+
+set(LIBRARY_SOURCE
+    ${LIBRARY_HEADERS}
     ${CMAKE_CURRENT_LIST_DIR}/Foo.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/Foo2.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/FooObjCpp.cpp
 )
 
 add_library(
@@ -10,7 +16,14 @@ add_library(
     ${LIBRARY_SOURCE}
 )
 
+# This way you can enable compilation as ObjectiveC on regular C++ files without
+# renaming
+set_source_files_properties(${CMAKE_CURRENT_LIST_DIR}/FooObjCpp.cpp PROPERTIES
+    XCODE_EXPLICIT_FILE_TYPE "sourcecode.cpp.objcpp")
+
 set(CMAKE_SHARED_LINKER_FLAGS "-Wall")
+
+string(REPLACE "" ";" LIBRARY_HEADERS_STRING "${LIBRARY_HEADERS}")
 
 set_target_properties(${FRAMEWORK_NAME} PROPERTIES
     FRAMEWORK TRUE
@@ -21,7 +34,7 @@ set_target_properties(${FRAMEWORK_NAME} PROPERTIES
     VERSION 1.0.0
     # "compatibility version" in semantic format in Mach-O binary file
     SOVERSION 1.0.0
-    PUBLIC_HEADER "${CMAKE_CURRENT_LIST_DIR}/Foo.hh"
+    PUBLIC_HEADER "${LIBRARY_HEADERS_STRING}"
     XCODE_ATTRIBUTE_IPHONEOS_DEPLOYMENT_TARGET ${DEPLOYMENT_TARGET}
     XCODE_ATTRIBUTE_CODE_SIGN_IDENTITY ${CODE_SIGN_IDENTITY}
     XCODE_ATTRIBUTE_DEVELOPMENT_TEAM ${DEVELOPMENT_TEAM_ID}

@@ -4,6 +4,7 @@
 @interface CppInterface () 
 {
     Foo* myFoo;
+    Foo2 myFoo2;
 }
 @end
 
@@ -15,6 +16,7 @@
     if (self) {
         myFoo = new Foo();
         myFoo->PrintFoo();
+        myFoo->PrintFoo2();
         delete myFoo;
         myFoo = nullptr;
     }
